@@ -43,7 +43,7 @@ else:
     word_list.append(check)
 
 
-word_list, word_list_b = sorted(word_list), ""
+word_list, word_list_b, lose_rules, numx = sorted(word_list), "", 0, 0
 word_len = len_word()
 
 # Now the program will ask for E in the word and it's place   ----    E
@@ -78,15 +78,16 @@ while 1 == 1:
     word_list_new, word_list_b = "", []
 
     #SORTING
-    word_list_new, word_len, pos, asking_letter, num2, word_list, word_listb = sort(word_list_new, word_len, pos,
-            asking_letter, num2,word_list, word_list_b)
+    word_list_new, word_len, pos, asking_letter, num2, word_list, word_listb, used, lose_rules = sort(word_list_new,
+            word_len, pos, asking_letter, num2,word_list, word_list_b, used, lose_rules)
 
     print("Possible words:", word_listb)
-
-    for u in used:
-        # replaces used characters with ""
-        word_list_new = word_list_new.replace(u, "")
-
+    if lose_rules < 100:
+        if lose_rules < 3:
+            print("Score: {}/3".format(lose_rules))
+        elif lose_rules:
+            print("I have lost")
+            lose_rules += 100
     print("\n")
     if len(word_list_b) == 1:
         print(word_listb[0], "- Your word has been discovered!")
