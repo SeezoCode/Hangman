@@ -45,10 +45,10 @@ else:
 
 word_list, word_list_b, lose_rules, numx = sorted(word_list), "", 0, 0
 word_len = len_word()
-
+game_still_going = True
 # Now the program will ask for E in the word and it's place   ----    E
 used, ff, uu, = "", "e", 0
-while 1 == 1:
+while game_still_going:
     if uu != 0:
         word_list = word_list_b
     uu += 1
@@ -91,13 +91,13 @@ while 1 == 1:
     print("\n")
     if len(word_list_b) == 1:
         print(word_listb[0], "- Your word has been discovered!")
-        break
+        game_still_going = False
 
     try:
         ff = collections.Counter(word_list_new).most_common(1)[0]
     except(ValueError, IndexError):
         print("Your word has not been discovered.")
-        break
+        game_still_going = False
 
     print(ff)
     print("The most common letter is {}".format(ff[0]))
