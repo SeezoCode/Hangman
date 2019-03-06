@@ -25,8 +25,10 @@ from New_Defs import *
 import json
 word_list, mystr = words()
 check = str(input("Please check if your word is in the library: \n"))
-s = ""
+json.dump(check + " ", added_words_log)
+
 with open("added_words_log", "r+") as f:
+    s = ""
     if 1 >= word_list.count(check):
         c = f.read()
         c = re.sub("[^\w]", " ", c).split()
