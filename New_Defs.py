@@ -62,4 +62,5 @@ def sort(word_list_new, word_len, pos, asking_letter, num2, word_list, word_list
         if numx == 0:
             lose_rules += 1
     except(UnboundLocalError): pass
+    word_list = word_list_b
     return word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules

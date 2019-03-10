@@ -25,7 +25,6 @@ from New_Defs import *
 import json
 word_list, mystr = words()
 check = str(input("Please check if your word is in the library: \n"))
-json.dump(check + " ", added_words_log)
 
 with open("added_words_log", "r+") as f:
     s = ""
@@ -51,9 +50,6 @@ game_still_going = True
 # Now the program will ask for E in the word and it's place   ----    E
 used, ff, uu, = "", "e", 0
 while game_still_going:
-    if uu != 0:
-        word_list = word_list_b
-    uu += 1
     asking_letter = ff[0]
     a = "Is there {} in the word? [y/n] \n".format(asking_letter)
 
@@ -91,17 +87,20 @@ while game_still_going:
             print("I have lost")
             lose_rules += 100
     print("\n")
+
     if len(word_list_b) == 1:
         print(word_listb[0], "- Your word has been discovered!")
         game_still_going = False
-
+        break
     try:
         ff = collections.Counter(word_list_new).most_common(1)[0]
+        print(ff)
+        print("The most common letter is {}".format(ff[0]))
     except(ValueError, IndexError):
         print("Your word has not been discovered.")
         game_still_going = False
+        break
 
-    print(ff)
-    print("The most common letter is {}".format(ff[0]))
+
 
 input("Please press ENTER to exit   ")
