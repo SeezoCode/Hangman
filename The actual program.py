@@ -23,19 +23,22 @@ from typing import Any
 from All_words import *
 from New_Defs import *
 import json
+
 word_list, mystr = words()
 check = str(input("Please check if your word is in the library: \n"))
 
 with open("added_words_log", "r+") as f:
     s = ""
-    if 1 >= word_list.count(check):
+    if 0 == word_list.count(check):
         c = f.read()
         c = re.sub("[^\w]", " ", c).split()
+        c.append(check)
         c = set(c)
-        for i in c:
-            s += i + " "
+        c = list(c)
+        for word in c:
+            s += word + " "
         with open("added_words_log", "w") as file:
-            file.write(s + check + " ")
+            file.write(s + " ")
 
 if 0 != word_list.count(check):
     print("The word is in the library, the length is {}".format(len(check)))
@@ -43,8 +46,7 @@ else:
     print("The word has been added to the library, the length is {}".format(len(check)))
     word_list.append(check)
 
-
-word_list, word_list_b, lose_rules, numx = sorted(word_list), "", 0, 0
+word_list, word_list_b, lose_rules, numx, st, list, numbers = sorted(word_list), "", 0, 0, 0, [], ""
 word_len = len_word()
 game_still_going = True
 # Now the program will ask for E in the word and it's place   ----    E
@@ -55,7 +57,7 @@ while game_still_going:
 
     pos, mn, x, word_e_ask = 0, 0, 1, ""
     # Asks for {} in the word
-    word_e_ask, mn = ask(a, mn, word_e_ask)
+    word_e_ask, mn, askTrue = ask(a, mn, word_e_ask)
     # -----------Ask E
     num2 = 0
     if word_e_ask == "y":
@@ -75,9 +77,13 @@ while game_still_going:
     print("asking letter was:", asking_letter)
     word_list_new, word_list_b = "", []
 
-    #SORTING
+    # SORTING
     word_list_new, word_len, pos, asking_letter, num2, word_list, word_listb, used, lose_rules = sort(word_list_new,
-            word_len, pos, asking_letter, num2,word_list, word_list_b, used, lose_rules)
+                                                                                                      word_len, pos,
+                                                                                                      asking_letter,
+                                                                                                      num2, word_list,
+                                                                                                      word_list_b, used,
+                                                                                                      lose_rules)
 
     print("Possible words:", word_listb)
     if lose_rules < 100:
@@ -86,6 +92,8 @@ while game_still_going:
         elif lose_rules:
             print("I have lost")
             lose_rules += 100
+    print("\n")
+    list, st, numbers = places(word_len, pos, asking_letter, askTrue, st, list, numbers)
     print("\n")
 
     if len(word_list_b) == 1:
@@ -100,7 +108,5 @@ while game_still_going:
         print("Your word has not been discovered.")
         game_still_going = False
         break
-
-
 
 input("Please press ENTER to exit   ")

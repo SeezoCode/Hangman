@@ -15,18 +15,22 @@ def len_word():
 
 def ask(a, mn, word_e_ask):    # Is there...
     x = 1
+    askTrue = False
     while x == 1:
         try:
             word_e_ask = str(input(a).lower())
+            if word_e_ask == "y":
+                askTrue = True
             try:
                 mn = int(word_e_ask)
+                askTrue = True
                 break
             finally:
                 x += 1
                 break
         except ValueError:
             pass
-    return word_e_ask, mn
+    return word_e_ask, mn, askTrue
 
 
 def wh_place(num2,pos):
@@ -64,3 +68,24 @@ def sort(word_list_new, word_len, pos, asking_letter, num2, word_list, word_list
     except(UnboundLocalError): pass
     word_list = word_list_b
     return word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules
+
+
+def places(word_len, pos, used, askTrue, st, list, numbers):
+    def only_once(word_len, st):
+        list = []
+        numbers = ""
+        for i in range(word_len):
+            list.append("-")
+        for i in range(word_len):
+            numbers += "   " + str(i + 1) + " "
+        st = 1
+        return list, numbers, st
+    if st == 0:
+        list, numbers, st = only_once(word_len, st)
+    if askTrue == True:
+        list.pop(pos)
+        list.insert(pos, used)
+
+    print(numbers, "\n", list)
+
+    return list, st, numbers
