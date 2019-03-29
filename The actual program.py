@@ -16,7 +16,8 @@ feature changelog:
 
 word_list_new           string of word_list without asked
 """
-
+with open("added_words_log", "w") as file:
+    file.write("test")
 import re
 import collections
 from typing import Any
@@ -97,7 +98,7 @@ while game_still_going:
     print("\n")
 
     if len(word_list_b) == 1:
-        print(word_listb[0], "- Your word has been discovered!")
+        print(word_listb[0], "- Your word has been discovered! \nI have won")
         game_still_going = False
         break
     try:
