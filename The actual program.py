@@ -25,7 +25,7 @@ from All_words import *
 from New_Defs import *
 import json
 
-word_list, mystr = words()
+word_list = words()
 check = str(input("Please check if your word is in the library: \n"))
 
 with open("added_words_log", "r+") as f:
@@ -47,7 +47,7 @@ else:
     print("The word has been added to the library, the length is {}".format(len(check)))
     word_list.append(check)
 
-word_list, word_list_b, lose_rules, numx, st, list, numbers = sorted(word_list), "", 0, 0, 0, [], ""
+word_list, word_list_b, lose_rules, numx, st, list, numbers, asked_correctly = sorted(word_list), "", 0, 0, 0, [], "", 0
 word_len = len_word()
 game_still_going = True
 # Now the program will ask for E in the word and it's place   ----    E
@@ -65,7 +65,7 @@ while game_still_going:
         num2 = 1
     # -----------Ask place;
     if mn == 0:
-        pos = wh_place(num2, pos)
+        pos = wh_place(num2, pos, word_len, asked_correctly)
     else:
         pos = mn - 1
         num2 = 1
@@ -79,12 +79,14 @@ while game_still_going:
     word_list_new, word_list_b = "", []
 
     # SORTING
-    word_list_new, word_len, pos, asking_letter, num2, word_list, word_listb, used, lose_rules = sort(word_list_new,
+    word_list_new, word_len, pos, asking_letter, num2, word_list, word_listb, used, lose_rules, asked_correctly = sort(
+                                                                                                      word_list_new,
                                                                                                       word_len, pos,
                                                                                                       asking_letter,
                                                                                                       num2, word_list,
                                                                                                       word_list_b, used,
-                                                                                                      lose_rules)
+                                                                                                      lose_rules,
+                                                                                                      asked_correctly)
 
     print("Possible words:", word_listb)
     if lose_rules < 100:

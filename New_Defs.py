@@ -33,9 +33,8 @@ def ask(a, mn, word_e_ask):    # Is there...
     return word_e_ask, mn, askTrue
 
 
-def wh_place(num2,pos):
-    if num2 > 0 and pos == 0:
-        # pos = int(input("On which place? \n"))
+def wh_place(num2,pos, word_len, asked_correctly):
+    if num2 > 0 and pos == 0 and not asked_correctly + 1 == word_len:
         x = 1
         while x == 1:
             try:
@@ -47,12 +46,13 @@ def wh_place(num2,pos):
         pos = 0
     return pos - 1
 
-def sort(word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules):
+def sort(word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules, asked_correctly):
     for i in word_list:
         if len(i) == word_len and i[pos] == asking_letter and num2 != 0:  # --With letter
             word_list_b.append(i)
             word_list_new += i
             numx = 1
+            asked_correctly += 1
         elif len(i) == word_len and i.count(asking_letter) == 0 and num2 == 0:  # --No letter
             word_list_b.append(i)
             word_list_new += i
@@ -67,7 +67,7 @@ def sort(word_list_new, word_len, pos, asking_letter, num2, word_list, word_list
             lose_rules += 1
     except(UnboundLocalError): pass
     word_list = word_list_b
-    return word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules
+    return word_list_new, word_len, pos, asking_letter, num2, word_list, word_list_b, used, lose_rules, asked_correctly
 
 
 def places(word_len, pos, used, askTrue, st, list, numbers):
